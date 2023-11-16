@@ -6,7 +6,7 @@
 /*   By: yusung <yusung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 20:07:22 by yusung            #+#    #+#             */
-/*   Updated: 2023/11/15 21:30:20 by yusung           ###   ########.fr       */
+/*   Updated: 2023/11/16 13:42:41 by yusung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,11 @@ int	main(int argc, char **argv, char **envp)
 	i = 0;
 	while (i < child_cnt)
 	{
-		if (i > 1)  // cur를 prev에 저장시키는 코드
+		if (i > 0) // cur를 prev에 저장, 즉 이전에 파이프가 정해준 fd를 저장(0번 자식인 경우는 prev를 넘겨줄 필요 없음)
 		{
-			close(prev[0]);
-			close(prev[1]);
+			prev[0] = cur[0];  
+			prev[1] = cur[1];
 		}
-		prev[0] = cur[0];
-		prev[1] = cur[1];
 		if (pipe(cur) < 0)
 			error(PIPE_ERR);
 		pid = fork();
@@ -121,12 +119,15 @@ int	main(int argc, char **argv, char **envp)
 			else
 				mid_process(prev, cur, argv[i+2], envp);
 		}
+		if (i > 0) // prev는 이제 사용되지 않으므로 닫아주기
+		{
+			close(prev[0]);
+			close(prev[1]);
+		}
 		i++;
 	}
 	close(cur[0]);
 	close(cur[1]);
-	close(prev[0]);
-	close(prev[1]);
 	i = 0;
 	while (i < child_cnt)
 	{
