@@ -6,7 +6,7 @@
 /*   By: yusung <yusung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 20:07:22 by yusung            #+#    #+#             */
-/*   Updated: 2023/11/16 13:42:41 by yusung           ###   ########.fr       */
+/*   Updated: 2023/11/16 14:00:49 by yusung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,11 @@ int	main(int argc, char **argv, char **envp)
 			prev[0] = cur[0];  
 			prev[1] = cur[1];
 		}
-		if (pipe(cur) < 0)
-			error(PIPE_ERR);
+		if (i != child_cnt - 1)
+		{
+			if (pipe(cur) < 0)
+				error(PIPE_ERR);
+		}
 		pid = fork();
 		if (pid < 0)
 			error(FORK_ERR);
