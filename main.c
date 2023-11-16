@@ -6,7 +6,7 @@
 /*   By: yusung <yusung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 20:07:22 by yusung            #+#    #+#             */
-/*   Updated: 2023/11/16 14:00:49 by yusung           ###   ########.fr       */
+/*   Updated: 2023/11/16 14:23:45 by yusung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		i++;
 	}
-	close(cur[0]);
-	close(cur[1]);
 	i = 0;
 	while (i < child_cnt)
 	{
